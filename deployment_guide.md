@@ -1,43 +1,27 @@
 
 # The Complete Logly Deployment Guide
 
-This guide covers installing the necessary tools and setting up the "Social Sync" database.
-
-## Step 0: Install Git (The Engine)
-Git is required to send your code to GitHub.
-- **Windows**: Download from [git-scm.com](https://git-scm.com).
-- **Mac**: Type `git --version` in Terminal and follow the prompts to install.
-
-## Step 1: Database Setup (Firestore)
-To make "Social Syncing" work (so friends see your posts):
-1. Go to your [Firebase Console](https://console.firebase.google.com/).
-2. Click **Build** > **Firestore Database**.
-3. Click **Create Database**.
-4. Choose a location and select **"Start in test mode"** (this allows you and your friends to post without complex login rules for the first 30 days).
-5. Click **Project Settings** (the gear icon) > **General**.
-6. Scroll down to "Your apps" and click the **</> (Web)** icon to register your app.
-7. **Copy the `firebaseConfig` object** from the screen. You will need to paste this into `services/firebaseService.ts`.
-
-## Step 2: GitHub Workflow
-1. Create a repo on [github.com](https://github.com).
-2. Push your code:
+## Step 5: The Final Launch 🚀
+1. **Push your changes**:
    ```bash
-   git init
    git add .
-   git commit -m "First poop app commit"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/logly.git
-   git push -u origin main
+   git commit -m "Fixing deployment secrets"
+   git push origin main
    ```
+2. **Watch the Magic**: 
+   - Go to your GitHub repository in your browser.
+   - Click the **"Actions"** tab.
 
-## Step 3: Automatic Deployment
-Run:
-```bash
-firebase init hosting:github
-```
-Follow the prompts. Now, every time you `git push`, your website updates automatically!
+## 🔴 Troubleshooting: "The Red X" (Action Failed)
+If the action is still red, do this:
+1. Go to your **GitHub Repository** in your browser.
+2. Click **Settings** (top tab) -> **Secrets and variables** (left menu) -> **Actions**.
+3. Look at the list under **"Repository secrets"**.
+4. You will see something like `FIREBASE_SERVICE_ACCOUNT_POOP_...`.
+5. **Copy that exact name**.
+6. Open `.github/workflows/firebase-hosting-merge.yml` in your code.
+7. Replace `FIREBASE_SERVICE_ACCOUNT_POOP_FC7C4` with the name you copied.
+8. Save, commit, and push again.
 
-## Alternative: Manual Deploy (No Git Required)
-If you don't want to use GitHub/Git at all, you can deploy manually from your terminal:
-1. `firebase login`
-2. `firebase deploy`
+### Why it failed:
+GitHub Actions are very strict. If the code asks for a secret named "A" but your vault has a secret named "B", it stops for security. This fix ensures the key and the lock match!
