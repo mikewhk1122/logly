@@ -1,0 +1,7 @@
+{
+  "name": "Logly - The Poop Social Network",
+  "description": "Track, analyze, and share your bowel movements with friends. Includes AI analysis of your 'contributions' and health tracking.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
