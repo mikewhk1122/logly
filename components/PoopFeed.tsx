@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { PoopPost } from '../types';
-import PoopCard from './PoopCard';
-import { Language, TRANSLATIONS } from '../translations';
+import { PoopPost } from '../types.ts';
+import PoopCard from './PoopCard.tsx';
+import { Language, TRANSLATIONS } from '../translations.ts';
 
 interface PoopFeedProps {
   posts: PoopPost[];
@@ -12,7 +11,7 @@ interface PoopFeedProps {
 const PoopFeed: React.FC<PoopFeedProps> = ({ posts, lang }) => {
   const t = TRANSLATIONS[lang];
 
-  if (posts.length === 0) {
+  if (!posts || posts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         <div className="text-6xl mb-4">🧻</div>

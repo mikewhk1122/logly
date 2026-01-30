@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-HK">
   <head>
@@ -11,42 +10,10 @@
       body {
         font-family: 'Inter', sans-serif;
         background-color: #fdf8f6;
+        margin: 0;
+        padding: 0;
       }
       .scrollbar-hide::-webkit-scrollbar { display: none; }
       .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     <script>
-      window.process = { 
-        env: { API_KEY: "" } 
-      };
-    </script>
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
-    "recharts": "https://esm.sh/recharts@2.12.7?external=react,react-dom,immer",
-    "immer": "https://esm.sh/immer@10.1.1",
-    "@google/genai": "https://esm.sh/@google/genai@1.3.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
-  <link rel="stylesheet" href="/index.css">
-</head>
-  <body>
-    <div id="root">
-      <div class="flex items-center justify-center min-h-screen">
-        <div class="text-center">
-          <div class="animate-bounce text-4xl mb-4">💩</div>
-          <p class="text-amber-800 font-bold">Logly 正在努力加載中...</p>
-        </div>
-      </div>
-    </div>
-    <script type="module" src="./index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
-</html>

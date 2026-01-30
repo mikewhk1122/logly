@@ -1,9 +1,14 @@
+import { initializeApp } from "firebase/app";
+import { 
+  getFirestore, 
+  collection, 
+  addDoc, 
+  onSnapshot, 
+  query, 
+  orderBy, 
+  limit 
+} from "firebase/firestore";
 
-/**
- * TO ACTIVATE SOCIAL SYNC:
- * 1. Get your config from Firebase Console > Project Settings.
- * 2. Replace the placeholder values below.
- */
 const firebaseConfig = {
   apiKey: "AIzaSyDdB3JnUyr3m8v-Gr8Xbakajh2lmYN6ukk",
   authDomain: "poop-fc7c4.firebaseapp.com",
@@ -13,21 +18,6 @@ const firebaseConfig = {
   appId: "1:162439952479:web:732c4720cedd08bd8b83ea",
   measurementId: "G-GEP8HLGTB9"
 };
-
-// Note: In a real app, we would import from 'https://www.gstatic.com/firebasejs/...'
-// For this ESM environment, we assume Firebase is available or provided via scripts.
-// Since we are using standard ESM, we will use the browser-compatible imports.
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  onSnapshot, 
-  query, 
-  orderBy, 
-  limit 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
-import Header from './components/Header';
-import PoopFeed from './components/PoopFeed';
-import PoopForm from './components/PoopForm';
-import StatsBoard from './components/StatsBoard';
-import Login from './components/Login';
-import { PoopPost, UserProfile } from './types';
-import { MOCK_USERS } from './constants';
-import { Language } from './translations';
-import { subscribeToPosts, savePoopPost } from './services/firebaseService';
+import Header from './components/Header.tsx';
+import PoopFeed from './components/PoopFeed.tsx';
+import PoopForm from './components/PoopForm.tsx';
+import StatsBoard from './components/StatsBoard.tsx';
+import Login from './components/Login.tsx';
+import { PoopPost, UserProfile } from './types.ts';
+import { MOCK_USERS } from './constants.ts';
+import { Language } from './translations.ts';
+import { subscribeToPosts, savePoopPost } from './services/firebaseService.ts';
 
 const App: React.FC = () => {
   const [view, setView] = useState<'feed' | 'log' | 'stats'>('feed');
@@ -16,9 +15,7 @@ const App: React.FC = () => {
   const [posts, setPosts] = useState<PoopPost[]>([]);
   const [user, setUser] = useState<UserProfile | null>(null);
 
-  // Sync with Firestore in real-time
   useEffect(() => {
-    // 1. Load local preferences
     const savedLang = localStorage.getItem('logly_lang') as Language;
     const savedUserId = localStorage.getItem('logly_user_id');
     if (savedLang) setLang(savedLang);
@@ -27,9 +24,8 @@ const App: React.FC = () => {
       if (foundUser) setUser(foundUser);
     }
 
-    // 2. Subscribe to the "Global" Poop Feed
     const unsubscribe = subscribeToPosts((firebasePosts) => {
-      if (firebasePosts.length > 0) {
+      if (firebasePosts && firebasePosts.length >= 0) {
         setPosts(firebasePosts);
       }
     });
@@ -55,10 +51,7 @@ const App: React.FC = () => {
   };
 
   const handleNewPost = useCallback(async (newPost: PoopPost) => {
-    // Save to Firebase for everyone to see
     await savePoopPost(newPost);
-    
-    // Update local user stats (fake for now, would be better in Firestore too!)
     if (user) {
       setUser(prev => prev ? ({
         ...prev,
@@ -85,10 +78,7 @@ const App: React.FC = () => {
       />
       
       <main className="max-w-2xl mx-auto px-4 pt-6">
-        {view === 'feed' && (
-          <PoopFeed posts={posts} lang={lang} />
-        )}
-        
+        {view === 'feed' && <PoopFeed posts={posts} lang={lang} />}
         {view === 'log' && (
           <PoopForm 
             onPostCreated={handleNewPost} 
@@ -97,10 +87,7 @@ const App: React.FC = () => {
             lang={lang} 
           />
         )}
-
-        {view === 'stats' && (
-          <StatsBoard user={user} posts={posts} lang={lang} />
-        )}
+        {view === 'stats' && <StatsBoard user={user} posts={posts} lang={lang} />}
       </main>
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-white/80 backdrop-blur-md border border-amber-100 p-2 rounded-full shadow-2xl z-50">
