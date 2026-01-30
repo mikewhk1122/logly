@@ -2,13 +2,17 @@
 import { GoogleGenAI } from "@google/genai";
 import { Language } from "../translations";
 
-const API_KEY = process.env.API_KEY;
-
 export const analyzePoopPost = async (note: string, bristolType: number, lang: Language, imageData?: string) => {
-  if (!API_KEY) return "AI analysis unavailable (Missing API Key)";
+  // Use a fallback to check both window.process and global process
+  const apiKey = (window as any).process?.env?.API_KEY || (typeof process !== 'undefined' ? process.env.API_KEY : null);
+  
+  if (!apiKey) {
+    console.warn("Gemini API Key missing. Skipping AI analysis.");
+    return lang === 'zh' ? "AI 休息中，但你做得很出色！" : "The AI is on a break, but you did a great job!";
+  }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: API_KEY });
+    const ai = new GoogleGenAI({ apiKey });
     const model = 'gemini-3-flash-preview';
     
     const langInstructions = lang === 'zh' 
@@ -34,7 +38,7 @@ export const analyzePoopPost = async (note: string, bristolType: number, lang: L
 
     const response = await ai.models.generateContent({
       model,
-      contents: typeof contents === 'string' ? contents : [contents],
+      contents: typeof contents === 'string' ? [{ text: contents }] : [contents],
     });
 
     return response.text || (lang === 'zh' ? "做得好，繼續努力！" : "Nature calls, and you answered beautifully!");
